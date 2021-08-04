@@ -15,9 +15,9 @@ namespace TREC_Desktop
 {
     public partial class Main_Form : Form
     {
-        public Database_Connection connection;
-        public Database_Instance database;
-        public SQL_Datatable<TaskUnit> tasks;
+        private Database_Connection connection;
+        private Database_Instance database;
+        private SQL_Datatable<TaskUnit> tasks;
 
         private TaskUnit task;
 
@@ -38,7 +38,28 @@ namespace TREC_Desktop
                 Application.Exit();
             }
 
+            Global.connection = this.connection;
+
             this.tasks = new SQL_Datatable<TaskUnit>(this.database);
+            this.tasks.Initialise();
+
+            Global.tasks = this.tasks;
+
+            this.btn_End.Enabled = false;
+            this.tbox_Task.Enabled = false;
+
+            this.FormClosed += Main_Form_FormClosed;
+        }
+
+        private void Main_Form_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.task != null)
+            {
+                this.task.end_at = DateTime.Now;
+                this.task.narration = string.IsNullOrEmpty(this.tbox_Task.Text) ? "a new task" : this.tbox_Task.Text.Trim();
+
+                this.tasks.Add(task);
+            }
         }
 
         private void ButtonClick(object sender, EventArgs e)
@@ -49,20 +70,36 @@ namespace TREC_Desktop
             {
                 case "btn_New":
                     this.task = new TaskUnit();
-                    this.task.start = DateTime.Now;
+                    this.task.start_at = DateTime.Now;
 
+                    this.btn_New.Visible = false;
+                    this.btn_Save.Visible = true;
+                    this.tbox_Task.Enabled = true;
                     break;
                 case "btn_Save":
-                    this.task.end = DateTime.Now;
-                    this.task.narration = this.tbox_Task.Text.Trim();
+                    this.task.end_at = DateTime.Now;
+                    this.task.narration = string.IsNullOrEmpty(this.tbox_Task.Text) ? "a new task" : this.tbox_Task.Text.Trim();
 
                     this.tasks.Add(task);
 
                     this.tbox_Task.Text = "";
 
                     this.task = new TaskUnit();
-                    this.task.start = DateTime.Now;
+                    this.task.start_at = DateTime.Now;
 
+                    this.btn_Save.Enabled = false;
+                    this.btn_End.Enabled = true;
+
+                    break;
+                case "btn_End":
+                    this.task.end_at = DateTime.Now;
+                    this.task.narration = string.IsNullOrEmpty(this.tbox_Task.Text) ? "a new task" : this.tbox_Task.Text.Trim();
+
+                    this.tasks.Add(task);
+                    this.tbox_Task.Text = "";
+
+                    this.btn_Save.Enabled = true;
+                    this.btn_End.Enabled = false;
                     break;
                 case "btn_History":
                     using (History_Form history = new History_Form())

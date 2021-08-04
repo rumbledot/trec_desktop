@@ -17,16 +17,24 @@ namespace TREC_Desktop.Models
         public string narration { get; set; }
 
         [SQL_Column()]
-        public DateTime start { get; set; }
+        public DateTime start_at { get; set; }
+
+        public string start_at_string 
+        {
+            get 
+            {
+                return this.start_at.ToString("HH:mm");
+            }
+        }
 
         [SQL_Column()]
-        public DateTime end { get; set; }
+        public DateTime end_at { get; set; }
 
         public int elapse 
         { 
             get 
             {
-                return (this.end - this.start).Minutes;
+                return (this.end_at - this.start_at).Minutes;
             } 
         }
     }

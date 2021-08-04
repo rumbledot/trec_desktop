@@ -18,11 +18,6 @@ namespace TREC_Desktop
         {
             if (disposing && (components != null))
             {
-                this.task.end = DateTime.Now;
-                this.task.narration = this.tbox_Task.Text.Trim();
-
-                this.tasks.Add(task);
-
                 this.tasks = null;
                 this.task = null;
 
@@ -42,6 +37,8 @@ namespace TREC_Desktop
             this.tbox_Task = new System.Windows.Forms.TextBox();
             this.btn_New = new System.Windows.Forms.Button();
             this.btn_History = new System.Windows.Forms.Button();
+            this.btn_End = new System.Windows.Forms.Button();
+            this.btn_Save = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbox_Task
@@ -58,7 +55,7 @@ namespace TREC_Desktop
             // btn_New
             // 
             this.btn_New.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_New.Location = new System.Drawing.Point(13, 265);
+            this.btn_New.Location = new System.Drawing.Point(6, 268);
             this.btn_New.Name = "btn_New";
             this.btn_New.Size = new System.Drawing.Size(75, 23);
             this.btn_New.TabIndex = 1;
@@ -75,12 +72,38 @@ namespace TREC_Desktop
             this.btn_History.TabIndex = 2;
             this.btn_History.Text = "History";
             this.btn_History.UseVisualStyleBackColor = true;
+            this.btn_History.Click += new System.EventHandler(this.ButtonClick);
+            // 
+            // btn_End
+            // 
+            this.btn_End.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btn_End.Location = new System.Drawing.Point(87, 268);
+            this.btn_End.Name = "btn_End";
+            this.btn_End.Size = new System.Drawing.Size(75, 23);
+            this.btn_End.TabIndex = 3;
+            this.btn_End.Text = "End";
+            this.btn_End.UseVisualStyleBackColor = true;
+            this.btn_End.Click += new System.EventHandler(this.ButtonClick);
+            // 
+            // btn_Save
+            // 
+            this.btn_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btn_Save.Location = new System.Drawing.Point(6, 268);
+            this.btn_Save.Name = "btn_Save";
+            this.btn_Save.Size = new System.Drawing.Size(75, 23);
+            this.btn_Save.TabIndex = 4;
+            this.btn_Save.Text = "Save";
+            this.btn_Save.UseVisualStyleBackColor = true;
+            this.btn_Save.Visible = false;
+            this.btn_Save.Click += new System.EventHandler(this.ButtonClick);
             // 
             // Main_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(255, 303);
+            this.Controls.Add(this.btn_Save);
+            this.Controls.Add(this.btn_End);
             this.Controls.Add(this.btn_History);
             this.Controls.Add(this.btn_New);
             this.Controls.Add(this.tbox_Task);
@@ -98,6 +121,8 @@ namespace TREC_Desktop
         private System.Windows.Forms.TextBox tbox_Task;
         private System.Windows.Forms.Button btn_New;
         private System.Windows.Forms.Button btn_History;
+        private System.Windows.Forms.Button btn_End;
+        private System.Windows.Forms.Button btn_Save;
     }
 }
 
